@@ -16,20 +16,20 @@ def compute_s_line_graph_counts(
 ):
     if not num_processes:
         num_processes = cpu_count()
-    print("Filtering hyperedges based on s_min and max_hyperedge_size...")
+    print("Filtering hyperedges based on s_min and max_hyperedge_size...", flush=True)
     if max_hyperedge_size is not None:
         filtered_edges = [
             e for e in H.edges if s_min <= len(H.edges.members(e)) <= max_hyperedge_size
         ]
     else:
         filtered_edges = [e for e in H.edges if len(H.edges.members(e)) >= s_min]
-    print(f"Number of hyperedges after filtering: {len(filtered_edges)}")
+    print(f"Number of hyperedges after filtering: {len(filtered_edges)}", Flush=True)
 
     filtered_nodes = set()
     for e in filtered_edges:
         filtered_nodes.update(H.edges.members(e))
     filtered_nodes = list(filtered_nodes)
-    print(f"Number of nodes after filtering: {len(filtered_nodes)}")
+    print(f"Number of nodes after filtering: {len(filtered_nodes)}", flush=True)
 
     node_id_to_idx = {node_id: idx for idx, node_id in enumerate(filtered_nodes)}
     num_nodes = len(node_id_to_idx)
@@ -37,7 +37,7 @@ def compute_s_line_graph_counts(
     edge_id_to_idx = {edge_id: idx for idx, edge_id in enumerate(filtered_edges)}
     num_edges = len(edge_id_to_idx)
 
-    print("Creating edge memberships...")
+    print("Creating edge memberships...", flush=True)
     edge_memberships = []
     for edge_id in filtered_edges:
         members = [node_id_to_idx[node] for node in H.edges.members(edge_id)]
@@ -45,7 +45,7 @@ def compute_s_line_graph_counts(
 
     del H
 
-    print("Creating node to edges mapping...")
+    print("Creating node to edges mapping...", flush=True)
     node_to_edges_list = [[] for _ in range(num_nodes)]
     for edge_idx, nodes in enumerate(edge_memberships):
         for node_idx in nodes:
@@ -64,14 +64,14 @@ def compute_s_line_graph_counts(
     for batch_edges in edge_batches:
         worker_args.append((batch_edges, edge_memberships, node_to_edges, s_min))
     with Pool(processes=num_processes) as pool:
-        print("Processing hyperedge blocks in parallel...")
+        print("Processing hyperedge blocks in parallel...", flush=True)
         results = list(
             tqdm(
                 pool.imap_unordered(process_edges_batch, worker_args),
                 total=num_processes,
             )
         )
-    print("Combining results...")
+    print("Combining results...", flush=True)
     row_inds = []
     col_inds = []
     data_vals = []
@@ -85,7 +85,7 @@ def compute_s_line_graph_counts(
     data_vals = np.concatenate(data_vals)
     del results
 
-    print("Computing s-line graph statistics...")
+    print("Computing s-line graph statistics...", flush=True)
     stats = {}
     for s in s_values:
         valid_idx = np.where(data_vals >= s)[0]
@@ -134,9 +134,9 @@ def save_graph_stats(stats, stats_output_path):
     if stats:
         with open(stats_output_path, "w") as f:
             json.dump(stats, f, indent=4)
-        print(f"Saved graph statistics to {stats_output_path}")
+        print(f"Saved graph statistics to {stats_output_path}", flush=True)
     else:
-        print("No statistics to save.")
+        print("No statistics to save.", flush=True)
 
 
 def main():
@@ -181,12 +181,12 @@ def main():
     max_hyperedge_size = args.max_hyperedge_size
     num_processes = args.num_processes
 
-    print("Reading hypergraph...")
+    print("Reading hypergraph...", flush=True)
     H = xgi.read_hif(input_path)
     # H = xgi.load_xgi_data("diseasome")
-    print(f"Read hypergraph with {H.num_nodes} nodes and {H.num_edges} hyperedges.")
+    print(f"Read hypergraph with {H.num_nodes} nodes and {H.num_edges} hyperedges.", flush=True)
 
-    print("Computing s-line graph statistics...")
+    print("Computing s-line graph statistics...", flush=True)
     stats = compute_s_line_graph_counts(
         H, s_min, s_max, max_hyperedge_size, num_processes
     )

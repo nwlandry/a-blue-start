@@ -6,3 +6,5 @@ scipy>=1.10.1
 seaborn
 tarjan>=0.2.4
 pyarrow
+xgi
+tqdm
