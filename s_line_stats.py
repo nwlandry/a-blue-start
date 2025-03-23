@@ -1,6 +1,6 @@
-import numpy as np
 import json
 
+import numpy as np
 import xgi
 
 H = xgi.read_hif("data/deidentified_starterpack_hif.json")
@@ -38,7 +38,7 @@ for s in range(smin, smax + 1):
 
 data = {}
 data["num-nodes"] = num_nodes
-data['num-edges'] = num_edges
+data["num-edges"] = num_edges
 
 datastring = json.dumps(data, indent=2)
 

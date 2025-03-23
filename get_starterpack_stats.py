@@ -22,7 +22,9 @@ for e in H.edges:
     number_created[attrs["creator-id"]] += 1
     date_created = datetime.fromisoformat(attrs["date-created"])
     creator_date_created = datetime.fromisoformat(attrs["creator-date-created"])
-    account_age_at_creation.append((date_created - creator_date_created).days)
+    if creator_date_created != datetime(1, 1, 1, 0, 0, 0):
+        # filtering out nans
+        account_age_at_creation.append((date_created - creator_date_created).days)
 
 date_created = H.edges.attrs("date-created").aslist()
 
