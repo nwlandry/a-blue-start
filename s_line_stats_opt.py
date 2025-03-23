@@ -184,7 +184,10 @@ def main():
     print("Reading hypergraph...", flush=True)
     H = xgi.read_hif(input_path)
     # H = xgi.load_xgi_data("diseasome")
-    print(f"Read hypergraph with {H.num_nodes} nodes and {H.num_edges} hyperedges.", flush=True)
+    print(
+        f"Read hypergraph with {H.num_nodes} nodes and {H.num_edges} hyperedges.",
+        flush=True,
+    )
 
     print("Computing s-line graph statistics...", flush=True)
     stats = compute_s_line_graph_counts(
