@@ -90,7 +90,6 @@ if __name__ == "__main__":
     print(f"reading hypergraph from: {args.hypergraph_file}")
 
     H = xgi.read_hif(args.hypergraph_file)
-    # H = xgi.load_xgi_data("diseasome")
 
     hyperedges = relabel_and_extract_hyperedges(H, args.smin)
     inverted_index = build_inverted_index(hyperedges)
