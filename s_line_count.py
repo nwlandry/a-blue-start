@@ -1,9 +1,10 @@
-import xgi
-import multiprocessing as mp
-from collections import defaultdict
-from tqdm import tqdm
 import argparse
 import gc
+import multiprocessing as mp
+from collections import defaultdict
+
+import xgi
+from tqdm import tqdm
 
 
 def relabel_and_extract_hyperedges(H, smin):
@@ -12,7 +13,9 @@ def relabel_and_extract_hyperedges(H, smin):
     excluding hyperedges smaller than smin.
     """
     xgi.convert_labels_to_integers(H, in_place=True)
-    hyperedges = [set(H.edges.members(e)) for e in H.edges if len(H.edges.members(e)) >= smin]
+    hyperedges = [
+        set(H.edges.members(e)) for e in H.edges if len(H.edges.members(e)) >= smin
+    ]
     del H
     gc.collect()
     return hyperedges
@@ -53,15 +56,19 @@ def worker_task(args):
     return edge_counts, active_nodes
 
 
-def parallel_count_s_line_graph(hyperedges, inverted_index, smin, smax, num_workers=None):
+def parallel_count_s_line_graph(
+    hyperedges, inverted_index, smin, smax, num_workers=None
+):
     """
     parallel computation of s-line graph stats for all s in [smin, smax].
     """
     num_edges = len(hyperedges)
     num_workers = num_workers or mp.cpu_count()
     chunk_size = (num_edges + num_workers - 1) // num_workers
-    chunks = [(i, min(i + chunk_size, num_edges), hyperedges, inverted_index, smin, smax)
-              for i in range(0, num_edges, chunk_size)]
+    chunks = [
+        (i, min(i + chunk_size, num_edges), hyperedges, inverted_index, smin, smax)
+        for i in range(0, num_edges, chunk_size)
+    ]
 
     edge_counts_total = defaultdict(int)
     active_nodes_total = defaultdict(set)
@@ -74,16 +81,27 @@ def parallel_count_s_line_graph(hyperedges, inverted_index, smin, smax, num_work
                     active_nodes_total[s].update(active_nodes[s])
                 pbar.update(1)
 
-    result = {s: (len(active_nodes_total[s]), edge_counts_total[s]) for s in range(smin, smax + 1)}
+    result = {
+        s: (len(active_nodes_total[s]), edge_counts_total[s])
+        for s in range(smin, smax + 1)
+    }
     return result
 
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description="Compute s-line graph summary statistics.")
+    parser = argparse.ArgumentParser(
+        description="Compute s-line graph summary statistics."
+    )
     parser.add_argument("hypergraph_file", help="Path to hypergraph edge list")
-    parser.add_argument("--smin", type=int, default=1, help="Minimum s value (inclusive)")
-    parser.add_argument("--smax", type=int, default=3, help="Maximum s value (inclusive)")
-    parser.add_argument("--output", default="sline_summary.txt", help="Output file for results")
+    parser.add_argument(
+        "--smin", type=int, default=1, help="Minimum s value (inclusive)"
+    )
+    parser.add_argument(
+        "--smax", type=int, default=3, help="Maximum s value (inclusive)"
+    )
+    parser.add_argument(
+        "--output", default="sline_summary.txt", help="Output file for results"
+    )
 
     args = parser.parse_args()
 
@@ -95,9 +113,11 @@ if __name__ == "__main__":
     inverted_index = build_inverted_index(hyperedges)
 
     print(f"Computing s-line graph statistics for s in [{args.smin}, {args.smax}]...")
-    results = parallel_count_s_line_graph(hyperedges, inverted_index, args.smin, args.smax)
+    results = parallel_count_s_line_graph(
+        hyperedges, inverted_index, args.smin, args.smax
+    )
 
-    with open(args.output, 'w') as out:
+    with open(args.output, "w") as out:
         out.write("s\tnodes\tedges\n")
         for s in range(args.smin, args.smax + 1):
             nodes, edges = results[s]
