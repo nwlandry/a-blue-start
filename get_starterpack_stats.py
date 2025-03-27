@@ -1,6 +1,6 @@
 import json
 from collections import defaultdict
-from datetime import datetime, timezone
+from datetime import datetime
 
 import numpy as np
 import xgi
@@ -32,10 +32,7 @@ number_created = defaultdict(lambda: 0)
 account_age_at_creation = []
 for e in H.edges:
     attrs = H.edges[e]
-    try:
-        number_created[attrs["creator-id"]] += 1
-    except:
-        pass
+    number_created[attrs["creator-id"]] += 1
     date_created = datetime.fromisoformat(attrs["date-created"])
     creator_date_created = datetime.fromisoformat(attrs["creator-date-created"])
     if creator_date_created != datetime(1, 1, 1, 0, 0, 0):
