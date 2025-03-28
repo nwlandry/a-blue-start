@@ -1,12 +1,12 @@
-dask>=2023.5.0
+dask
 igraph
 leidenalg
 matplotlib
-numpy>=1.24.4
-pandas>=2.0.3
+numpy
+pandas
 pyarrow
-scipy>=1.10.1
+scipy
 seaborn
-tarjan>=0.2.4
+tarjan
 tqdm
 xgi
