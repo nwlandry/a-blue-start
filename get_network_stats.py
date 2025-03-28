@@ -1,8 +1,8 @@
-import numpy as np
 from collections import defaultdict
-from scipy import sparse
-from tarjan import tarjan
+
+import numpy as np
 import pandas as pd
+from tarjan import tarjan
 
 df = pd.read_csv("data/deidentified_follows_edgelist.csv", header=None)
 print("Loaded edgelist!", flush=True)
@@ -16,20 +16,17 @@ source = df[0].to_numpy()
 target = df[1].to_numpy()
 
 gd = defaultdict(list)
+gu = defaultdict(list)
 for i, j in zip(source, target):
     gd[i].append(j)
+    gu[i].append(j)
+    gu[j].append(i)
 
-print("Directed graph created!", flush=True)
+print("Directed and undirected graphs created!", flush=True)
 
 scc = tarjan(gd)
 sccs = [len(c) for c in scc]
 print("Strongly connected component sizes computed!", flush=True)
-
-gu = defaultdict(list)
-for i, j in zip(np.concatenate([source, target]), np.concatenate([target, source])):
-    gu[i].append(j)
-
-print("Undirected graph created!", flush=True)
 
 wcc = tarjan(gu)
 wccs = [len(c) for c in wcc]

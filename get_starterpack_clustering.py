@@ -3,11 +3,12 @@ import xgi
 
 H = xgi.read_hif("data/deidentified_starterpack_hif.json")
 
+import gc
+from itertools import combinations
+
 import igraph as ig
 import leidenalg
-from itertools import combinations
 from tqdm import tqdm
-import gc
 
 print("Mapping nodes to unique integers...")
 node_to_int = {node_id: idx for idx, node_id in enumerate(H.nodes)}
