@@ -2,8 +2,9 @@ import numpy as np
 from dask import dataframe
 from scipy import sparse
 from tarjan import tarjan
+import pandas as pd
 
-df = dataframe.read_csv("data/deidentified_follows_edgelist.csv", header=None)
+df = pd.read_csv("data/deidentified_follows_edgelist.csv", header=None)
 print("Loaded edgelist!")
 n_nodes = len(set(df[0].unique()).union(df[1].unique()))
 
@@ -11,8 +12,8 @@ out_degree = df.groupby(df[0]).agg("count")
 in_degree = df.groupby(df[1]).agg("count")
 print("Computed degrees!")
 
-source = df[0].to_dask_array(lengths=True)
-target = df[1].to_dask_array(lengths=True)
+source = df[0].to_numpy()
+target = df[1].to_numpy()
 mtx = sparse.coo_array((np.ones(len(df)), (source, target)))
 mtx = mtx.tocsr()
 print(mtx.shape)
