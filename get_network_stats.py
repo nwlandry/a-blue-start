@@ -1,47 +1,39 @@
 import numpy as np
-from dask import dataframe
+from collections import defaultdict
 from scipy import sparse
 from tarjan import tarjan
 import pandas as pd
 
 df = pd.read_csv("data/deidentified_follows_edgelist.csv", header=None)
-print("Loaded edgelist!")
+print("Loaded edgelist!", flush=True)
 n_nodes = len(set(df[0].unique()).union(df[1].unique()))
 
 out_degree = df.groupby(df[0]).agg("count")
 in_degree = df.groupby(df[1]).agg("count")
-print("Computed degrees!")
+print("Computed degrees!", flush=True)
 
 source = df[0].to_numpy()
 target = df[1].to_numpy()
-mtx = sparse.coo_array((np.ones(len(df)), (source, target)))
-mtx = mtx.tocsr()
-print(mtx.shape)
 
-gd = {}
-for node in range(n_nodes):
-    gd[node] = mtx[[node], :].nonzero()[1]
+gd = defaultdict(list)
+for i, j in zip(source, target):
+    gd[i].append(j)
 
-print("Directed graph created!")
+print("Directed graph created!", flush=True)
 
 scc = tarjan(gd)
 sccs = [len(c) for c in scc]
+print("Strongly connected component sizes computed!", flush=True)
 
+gu = defaultdict(list)
+for i, j in zip(np.concatenate([source, target]), np.concatenate([target, source])):
+    gu[i].append(j)
 
-mtx = sparse.coo_array(
-    (np.ones(2 * len(df)), (source.concatenate(target), target.concatenate(source)))
-)
-mtx = mtx.tocsr()
-print(mtx.shape)
-
-gu = {}
-for node in range(n_nodes):
-    gu[node] = mtx[[node], :].nonzero()[1]
-
-print("Undirected graph created!")
+print("Undirected graph created!", flush=True)
 
 wcc = tarjan(gu)
 wccs = [len(c) for c in wcc]
+print("Weakly connected component sizes computed!", flush=True)
 
 np.savetxt("data/follows_sccs.csv.gz", sccs, fmt="%d")
 np.savetxt("data/follows_wccs.csv.gz", wccs, fmt="%d")
