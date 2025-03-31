@@ -10,7 +10,7 @@ import igraph as ig
 import leidenalg
 from tqdm import tqdm
 
-print("Mapping nodes to unique integers...")
+print("Mapping nodes to unique integers...", flush=True)
 node_to_int = {node_id: idx for idx, node_id in enumerate(H.nodes)}
 int_to_node = {idx: node_id for node_id, idx in node_to_int.items()}
 
@@ -18,7 +18,7 @@ num_nodes = len(node_to_int)
 
 clique_edges_set = set()
 
-print("Constructing the edge list for the clique expansion...")
+print("Constructing the edge list for the clique expansion...", flush=True)
 
 for edge in tqdm(H.edges, desc="Processing hyperedges", unit="edges"):
     nodes = [node_to_int[node_id] for node_id in H.edges.members(edge)]
@@ -26,9 +26,12 @@ for edge in tqdm(H.edges, desc="Processing hyperedges", unit="edges"):
         for u, v in combinations(nodes, 2):
             clique_edges_set.add((min(u, v), max(u, v)))
 
-print(f"Total number of edges in the clique expansion: {len(clique_edges_set)}")
+print(
+    f"Total number of edges in the clique expansion: {len(clique_edges_set)}",
+    flush=True,
+)
 
-print("Creating the igraph Graph...")
+print("Creating the igraph Graph...", flush=True)
 edge_list = list(clique_edges_set)
 del clique_edges_set
 gc.collect()
@@ -40,19 +43,19 @@ G_ig.add_edges(edge_list)
 del edge_list
 gc.collect()
 
-print("Running the Leiden algorithm for community detection...")
+print("Running the Leiden algorithm for community detection...", flush=True)
 partition = leidenalg.find_partition(G_ig, leidenalg.ModularityVertexPartition, seed=0)
 
 del G_ig
 gc.collect()
 
-print("Mapping nodes to clusters...")
+print("Mapping nodes to clusters...", flush=True)
 node_to_cluster = {idx: cluster for idx, cluster in enumerate(partition.membership)}
 
 del partition
 gc.collect()
 
-print("calculating uncut hyperedges per size...")
+print("calculating uncut hyperedges per size...", flush=True)
 counts_per_size = {}
 not_cut_counts_per_size = {}
 
@@ -72,6 +75,6 @@ sizes = sorted(counts_per_size.keys())
 fractions = [
     not_cut_counts_per_size.get(size, 0) / counts_per_size[size] for size in sizes
 ]
-df = pd.DataFrame({"sizes": sizes[1:], "fractions": fractions[1:]})
+df = pd.DataFrame({"size": sizes[1:], "fraction": fractions[1:]})
 
-df.to_csv("data/starterpack_clustering.csv.gz")
+df.to_csv("data/starterpack_clustering.csv.gz", index=False)
