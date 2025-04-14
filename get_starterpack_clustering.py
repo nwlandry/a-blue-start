@@ -85,6 +85,10 @@ node_labels = {
 del partition
 gc.collect()
 
+print(
+    f"There are {len({i for i in node_labels.values()})} communities in the starter pack network."
+)
+
 edge_entropy = {}
 for e in H.edges:
     edge_entropy[e] = entropy([node_labels[n] for n in H.edges.members(e)], norm=True)
