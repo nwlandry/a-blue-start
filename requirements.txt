@@ -1,10 +1,8 @@
-dask
 igraph
 leidenalg
 matplotlib
 numpy
 pandas
-pyarrow
 scipy
 seaborn
 tarjan
