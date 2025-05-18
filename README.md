@@ -1,6 +1,6 @@
 # a-blue-start
 
-This repository accompanies the preprint "A Blue Start: A large-scale pairwise and higher-order social network dataset" by Alyssa Smith, Ilya Amburg, Sagar Kumar, Brooke Foucault Welles, and Nicholas W. Landry.
+This repository accompanies the preprint "A Blue Start: A large-scale pairwise and higher-order social network dataset" by Alyssa Smith, Ilya Amburg, Sagar Kumar, Brooke Foucault Welles, and Nicholas W. Landry. It provides all codes for reproducing the analyses and figures in the manuscript.
 
 ## Repository structure:
 * `data` contains data on the network statistics plotted in Figs. 1-6 in the paper.
@@ -25,4 +25,9 @@ python s_line_count.py data/deidentified_starterpack_hif.json --smin 1 --smax 34
 
 ## Plotting
 
- The ABlueStart dataset
+* `plot_network_stats.ipynb`: This notebook plots Fig. 5 and also prints the basic network statistics in a readable way.
+* `plot_starterpack_stats.ipynb`: This notebook plots Figs. 1-4, 6 and also prints the basic starter pack statistics in a readable way.
+
+## Getting started
+
+Start by downloading the [data](https://socialmediaarchive.org/record/78) from the Social Media Archive @ ICPSR (SOMAR).
