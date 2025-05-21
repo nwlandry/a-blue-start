@@ -1,6 +1,6 @@
 # a-blue-start
 
-This repository accompanies the preprint "A Blue Start: A large-scale pairwise and higher-order social network dataset" by Alyssa Smith, Ilya Amburg, Sagar Kumar, Brooke Foucault Welles, and Nicholas W. Landry. It provides all codes for reproducing the analyses and figures in the manuscript.
+This repository accompanies the preprint ["A Blue Start: A large-scale pairwise and higher-order social network dataset"](https://arxiv.org/abs/2505.11608) by Alyssa Smith, Ilya Amburg, Sagar Kumar, Brooke Foucault Welles, and Nicholas W. Landry. It provides all codes for reproducing the analyses and figures in the manuscript.
 
 ## Repository structure:
 * `data` contains data on the network statistics plotted in Figs. 1-6 in the paper.
