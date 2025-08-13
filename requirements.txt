@@ -1,8 +1,9 @@
 igraph
+jupyter
 leidenalg
 matplotlib
 numpy
-pandas
+polars
 scipy
 seaborn
 tarjan
