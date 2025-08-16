@@ -25,9 +25,9 @@ python s_line_count.py data/deidentified_starterpack_hif.json --smin 1 --smax 34
 
 ## Plotting
 
-* `plot_network_stats.ipynb`: This notebook plots Fig. 5 and also prints the basic network statistics in a readable way.
-* `plot_starterpack_stats.ipynb`: This notebook plots Figs. 1-4, 6 and also prints the basic starter pack statistics in a readable way.
+* `plot_network_stats.ipynb`: This notebook plots Fig. 4 and also prints the basic network statistics in a readable way.
+* `plot_starterpack_stats.ipynb`: This notebook plots Figs. 1-3, 5 and also prints the basic starter pack statistics in a readable way.
 
 ## Getting started
 
-Start by downloading the [data](https://socialmediaarchive.org/record/78) from the Social Media Archive @ ICPSR (SOMAR).
+Start by downloading the [data](https://doi.org/10.3886/kf6e-zq94) from the Social Media Archive @ ICPSR (SOMAR).
