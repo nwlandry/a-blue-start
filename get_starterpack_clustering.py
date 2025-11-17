@@ -1,7 +1,9 @@
 import gc
+import gzip
 import json
 from itertools import combinations
 from math import log
+from os.path import join
 
 import igraph as ig
 import leidenalg
@@ -39,7 +41,13 @@ def entropy(labels, base=None, norm=False):
         return ent
 
 
-H = xgi.read_hif("data/deidentified_starterpack_hif.json")
+base_dir = "/scratch/yyu8dx/Research/bluesky-graph/postprocessed_data/SOMAR"
+# base_dir = "data"
+starterpack_file = "deidentified_starterpack_hif.json.gz"
+
+with gzip.open(join(base_dir, starterpack_file), "rt", encoding="utf-8") as f:
+    hif_dict = json.load(f)
+H = xgi.from_hif_dict(hif_dict)
 xgi.largest_connected_hypergraph(H, in_place=True)
 
 print("Mapping nodes to unique integers...", flush=True)

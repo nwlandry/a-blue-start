@@ -1,14 +1,27 @@
+import gzip
 import json
 from collections import defaultdict
 from datetime import datetime
+from os import makedirs
+from os.path import join
 
 import numpy as np
 import xgi
 
-H = xgi.read_hif("data/deidentified_starterpack_hif.json")
+base_dir = "/scratch/yyu8dx/Research/bluesky-graph/postprocessed_data/SOMAR"
+# base_dir = "data"
+starterpack_file = "deidentified_starterpack_hif.json.gz"
+
+with gzip.open(join(base_dir, starterpack_file), "rt", encoding="utf-8") as f:
+    hif_dict = json.load(f)
+H = xgi.from_hif_dict(hif_dict)
+
+print("Loaded hypergraph!")
 
 cc = [len(c) for c in xgi.connected_components(H)]
 component_sizes, component_numbers = np.unique(cc, return_counts=True)
+
+print("Calculated component sizes!")
 
 edge_sizes = H.edges.size.aslist()
 degrees = H.nodes.degree.aslist()
@@ -30,18 +43,32 @@ mode_edge_size = H.edges.size.mode()
 
 number_created = defaultdict(lambda: 0)
 account_age_at_creation = []
+starterpack_date_created = []
+
 for e in H.edges:
-    attrs = H.edges[e]
-    number_created[attrs["creator-id"]] += 1
-    date_created = datetime.fromisoformat(attrs["date-created"])
-    creator_date_created = datetime.fromisoformat(attrs["creator-date-created"])
-    if creator_date_created != datetime(1, 1, 1, 0, 0, 0):
+    edge_attrs = H.edges[e]
+    n = edge_attrs["creator-id"]
+    number_created[n] += 1
+
+    date_created = datetime.fromisoformat(edge_attrs["date-created"])
+
+    try:
+        node_attrs = H.nodes[n]
+        creator_date_created = datetime.fromisoformat(node_attrs["date-created"])
+    except KeyError as e:
+        creator_date_created = datetime(1, 1, 1, 0, 0, 0)
+
+    if date_created > datetime(2020, 1, 1, 0, 0, 0):
+        starterpack_date_created.append(node_attrs["date-created"])
+
+    if creator_date_created > datetime(2020, 1, 1, 0, 0, 0):
         # filtering out nans
         account_age_at_creation.append((date_created - creator_date_created).days)
         if account_age_at_creation[-1] < 0:
-            print(H.edges[e])
+            print(edge_attrs["date-created"], node_attrs["date-created"])
 
-date_created = H.edges.attrs("date-created").aslist()
+
+print("Calculated temporal information")
 
 data = {}
 data["num-nodes"] = num_nodes
@@ -59,10 +86,11 @@ data["mean-edge-size"] = mean_edge_size
 data["median-edge-size"] = median_edge_size
 data["mode-edge-size"] = mode_edge_size
 data["components"] = [component_sizes.tolist(), component_numbers.tolist()]
-data["date-created"] = date_created
+data["date-created"] = starterpack_date_created
 data["number-created"] = list(number_created.values())
 data["account-age-at-creation"] = account_age_at_creation
 
 datastring = json.dumps(data, indent=2)
+makedirs("data", exist_ok=True)
 with open("data/starterpack-stats.json", "w") as f:
     f.write(datastring)

@@ -1,6 +1,7 @@
 import gzip
 import json
 from collections import defaultdict
+from os.path import join
 
 import numpy as np
 import scipy.stats as ss
@@ -51,8 +52,15 @@ def _log_bin_stats(x, y, nbins=30, reducer=np.mean):
     return centres[ok], y_binned[ok]
 
 
-d_f = count_node_degrees("data/deidentified_follows_edgelist.csv.gz")
-H = xgi.read_hif("data/deidentified_starterpack_hif.json")
+base_dir = "/scratch/yyu8dx/Research/bluesky-graph/postprocessed_data/SOMAR"
+# base_dir = "data"
+starterpack_file = "deidentified_starterpack_hif.json.gz"
+
+with gzip.open(join(base_dir, starterpack_file), "rt", encoding="utf-8") as f:
+    hif_dict = json.load(f)
+H = xgi.from_hif_dict(hif_dict)
+
+d_f = count_node_degrees(join(base_dir, "deidentified_follows_edgelist.csv.gz"))
 d_s = H.degree()
 
 nbins = 30
