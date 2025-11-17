@@ -42,18 +42,20 @@ out_degree_std = (
 )
 
 in_degree_std = [
-    0.0 if x is None else x
+    np.nan if x is None else x
     for x in in_degree_std
 ]
 out_degree_std = [
-    0.0 if x is None else x
+    np.nan if x is None else x
     for x in out_degree_std
 ]
 print("Computed degrees!", flush=True)
 
 gd = defaultdict(list)
 gu = defaultdict(list)
-for i, j, _ in df.iter_rows():
+for row in df.iter_rows():
+    i = row[0]
+    j = row[1]
     gd[i].append(j)
     gu[i].append(j)
     gu[j].append(i)
