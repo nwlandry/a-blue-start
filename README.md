@@ -8,7 +8,8 @@ This repository accompanies the preprint ["A Blue Start: A large-scale pairwise 
 
 ## Scripts
 The following scripts are used to generate statistics from the network data:
-* `get_network_stats.py`: This script is used to get the in- and out-degree sequences and the sizes of the weakly and strongly connected components for the following network and save them as a JSON file.
+* `get_degree_sequences.py`: This script is used to get the in- and out-degree sequences for the following network; it saves them as .csv or .csv.gz files. 
+* `get_component_sizes.py`: This script obtains the sizes of the weakly and strongly connected components for the following network and saves them as gzipped CSV files.
 * `get_starterpack_clustering`: This script is used to get node cluster labels based on the Leiden algorithm and then compute the normalized entropies of each edge.
 * `get_starterpack_k_core.py`: This script performs a k-core decomposition of the starter packs.
 * `get_starterpack_kendall_tau.py`: This script compares nodal rankings from the starter pack network and compares to the following network ranking using the Kendall Tau measure.

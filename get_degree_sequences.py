@@ -3,10 +3,8 @@ from os.path import join
 
 import numpy as np
 import polars as pl
-from tarjan import tarjan
 
-base_dir = "/scratch/yyu8dx/Research/bluesky-graph/postprocessed_data/SOMAR"
-# base_dir = "data"
+base_dir = '/home/smith.alyss/'
 
 df = pl.read_csv(
     join(base_dir, "deidentified_follows_edgelist.csv.gz"),
@@ -51,29 +49,8 @@ out_degree_std = [
 ]
 print("Computed degrees!", flush=True)
 
-gd = defaultdict(list)
-gu = defaultdict(list)
-for row in df.iter_rows():
-    i = row[0]
-    j = row[1]
-    gd[i].append(j)
-    gu[i].append(j)
-    gu[j].append(i)
-
-print("Directed and undirected graphs created!", flush=True)
-
-scc = tarjan(gd)
-sccs = [len(c) for c in scc]
-print("Strongly connected component sizes computed!", flush=True)
-
-wcc = tarjan(gu)
-wccs = [len(c) for c in wcc]
-print("Weakly connected component sizes computed!", flush=True)
-
 np.savetxt("data/in_degree_std.csv.gz", in_degree_std, fmt="%f")
 np.savetxt("data/out_degree_std.csv.gz", out_degree_std, fmt="%f")
-np.savetxt("data/follows_sccs.csv.gz", sccs, fmt="%d")
-np.savetxt("data/follows_wccs.csv.gz", wccs, fmt="%d")
 np.savetxt("data/follows_volume.csv", follow_volume, fmt=["%s", "%d"], delimiter=",")
 np.savetxt("data/follows_in-degree.csv.gz", in_degree, fmt="%d")
 np.savetxt("data/follows_out-degree.csv.gz", out_degree, fmt="%d")
