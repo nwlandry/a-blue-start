@@ -4,7 +4,7 @@ from os.path import join
 import numpy as np
 import polars as pl
 
-base_dir = '/home/smith.alyss/'
+base_dir = "/home/smith.alyss/"
 
 df = pl.read_csv(
     join(base_dir, "deidentified_follows_edgelist.csv.gz"),
@@ -25,7 +25,9 @@ SECONDS_PER_DAY = 86_400
 
 in_degree_std = (
     df.group_by("to")
-    .agg((pl.col("datetime").std() / SECONDS_PER_DAY).alias("in_degree_std"))  # std in seconds  # seconds → days
+    .agg(
+        (pl.col("datetime").std() / SECONDS_PER_DAY).alias("in_degree_std")
+    )  # std in seconds  # seconds → days
     .select("in_degree_std")
     .to_series()
     .to_list()
@@ -33,20 +35,16 @@ in_degree_std = (
 
 out_degree_std = (
     df.group_by("from")
-    .agg((pl.col("datetime").std() / SECONDS_PER_DAY).alias("out_degree_std"))  # std in seconds  # seconds → days
+    .agg(
+        (pl.col("datetime").std() / SECONDS_PER_DAY).alias("out_degree_std")
+    )  # std in seconds  # seconds → days
     .select("out_degree_std")
     .to_series()
     .to_list()
 )
 
-in_degree_std = [
-    np.nan if x is None else x
-    for x in in_degree_std
-]
-out_degree_std = [
-    np.nan if x is None else x
-    for x in out_degree_std
-]
+in_degree_std = [np.nan if x is None else x for x in in_degree_std]
+out_degree_std = [np.nan if x is None else x for x in out_degree_std]
 print("Computed degrees!", flush=True)
 
 np.savetxt("data/in_degree_std.csv.gz", in_degree_std, fmt="%f")

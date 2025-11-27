@@ -15,11 +15,11 @@ The following scripts are used to generate statistics from the network data:
 * `get_starterpack_kendall_tau.py`: This script compares nodal rankings from the starter pack network and compares to the following network ranking using the Kendall Tau measure.
 * `get_starterpack_pair_cooccurrence.py`: This script returns the distribution of two-node co-occurrence frequencies in the starter pack network.
 ```python
-python get_pair_co-occurrence.py --input_filepath "data/deidentified_starterpack_hif.json" --max_pack_size 4070 --num_workers 10
+python get_pair_co-occurrence.py --input_filepath "deidentified_starterpack_hif.json.gz" --max_pack_size 4069 --num_workers 10
 ```
 * `get_starterpack_pair_s_line_counts.py`: This script returns the number of nodes and edges in the s-line graph for $s=1,2,\dots,345$. It can be run as follows:
 ```python
-python s_line_count.py data/deidentified_starterpack_hif.json --smin 1 --smax 345 --output data/s_count.txt
+python s_line_count.py --input_filepath "deidentified_starterpack_hif.json.gz" --smin 1 --smax 345 --output data/s_count.csv
 ```
 * `get_starterpack_stats.py`: This script returns basic statistics of the starter pack network as a JSON file.
 

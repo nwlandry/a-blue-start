@@ -87,7 +87,7 @@ gc.collect()
 
 print("Mapping nodes to clusters...", flush=True)
 node_labels = {
-    str(int_to_node[idx]): cluster for idx, cluster in enumerate(partition.membership)
+    int_to_node[idx]: cluster for idx, cluster in enumerate(partition.membership)
 }
 
 del partition

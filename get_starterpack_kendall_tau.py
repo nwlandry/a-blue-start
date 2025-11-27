@@ -13,7 +13,7 @@ def count_node_degrees(file_path):
 
     with gzip.open(file_path, "rt") as f:
         for i, row in enumerate(f):
-            node1, node2 = row.strip().split(",")
+            node1, node2, _ = row.strip().split(",")
             if i % 10000000 == 0:
                 print(f"Processed {i} rows")
             node_degrees[int(node1)] += 1

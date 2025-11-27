@@ -94,7 +94,11 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(
         description="Compute s-line graph summary statistics."
     )
-    parser.add_argument("hypergraph_file", help="Path to hypergraph edge list")
+    parser.add_argument(
+        "--input_filepath",
+        type=str,
+        help="Path to the input hypergraph file (HIF format).",
+    )
     parser.add_argument(
         "--smin", type=int, default=1, help="Minimum s value (inclusive)"
     )
@@ -107,9 +111,9 @@ if __name__ == "__main__":
 
     args = parser.parse_args()
 
-    print(f"reading hypergraph from: {args.hypergraph_file}")
+    print(f"reading hypergraph from: {args.input_filepath}")
 
-    with gzip.open(args.hypergraph_file, "rt", encoding="utf-8") as f:
+    with gzip.open(args.input_filepath, "rt", encoding="utf-8") as f:
         hif_dict = json.load(f)
     H = xgi.from_hif_dict(hif_dict)
     H = xgi.read_hif()

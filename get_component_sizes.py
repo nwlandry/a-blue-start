@@ -1,17 +1,17 @@
-from collections import defaultdict
 import gzip
+from collections import defaultdict
 from os.path import join
 
 import numpy as np
 from tarjan import tarjan
 
-base_dir = '/home/smith.alyss/'
+base_dir = "/home/smith.alyss/"
 
 gd = defaultdict(list)
 gu = defaultdict(list)
-with gzip.open(join(base_dir, 'deidentified_follows_edgelist.csv.gz'), 'r') as f:
+with gzip.open(join(base_dir, "deidentified_follows_edgelist.csv.gz"), "r") as f:
     for row in f.readlines():
-        spl = row.decode("utf-8").split(',')
+        spl = row.decode("utf-8").split(",")
         i = int(spl[0])
         j = int(spl[1])
         gd[i].append(j)

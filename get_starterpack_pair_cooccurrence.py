@@ -1,7 +1,9 @@
 #!/usr/bin/env python3
 import argparse
 import collections
+import gzip
 import itertools
+import json
 import os
 import random
 from concurrent.futures import ProcessPoolExecutor, as_completed
@@ -88,7 +90,10 @@ def main():
         return
 
     print("Reading the hypergraph...")
-    H = xgi.read_hif(args.input_filepath)
+    with gzip.open(args.input_filepath, "rt", encoding="utf-8") as f:
+        hif_dict = json.load(f)
+    H = xgi.from_hif_dict(hif_dict)
+
     print("Hypergraph loaded.")
 
     all_hyperedges_data = [list(H.edges.members(hedge)) for hedge in H.edges]
