@@ -126,4 +126,4 @@ for node, core in core_numbers.items():
 
 kcore_values = [k for k in core_numbers.values() if k > 0]
 
-np.savetxt("data/starterpack_k-core.csv.gz", kcore_values, fmt="%d")
+np.savetxt("data/starterpack_k_core.csv.gz", kcore_values, fmt="%d")

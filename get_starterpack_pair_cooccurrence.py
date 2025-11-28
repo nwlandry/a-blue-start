@@ -126,7 +126,7 @@ def main():
     ]
 
     np.savetxt(
-        "data/starterpack_pair_co-occurrence.csv.gz", cooccurrence_counts, fmt="%d"
+        "data/starterpack_pair_cooccurrence.csv.gz", cooccurrence_counts, fmt="%d"
     )
 
 

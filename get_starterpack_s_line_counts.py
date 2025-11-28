@@ -3,7 +3,9 @@ import gc
 import gzip
 import json
 import multiprocessing as mp
+import os
 from collections import defaultdict
+from sys import platform
 
 import xgi
 from tqdm import tqdm
@@ -64,8 +66,12 @@ def parallel_count_s_line_graph(
     """
     parallel computation of s-line graph stats for all s in [smin, smax].
     """
+    if platform == "linux" or platform == "linux2":
+        num_workers = len(os.sched_getaffinity(0))
+    elif platform == "darwin" or platform == "win32":
+        num_workers = os.cpu_count()
+
     num_edges = len(hyperedges)
-    num_workers = num_workers or mp.cpu_count()
     chunk_size = (num_edges + num_workers - 1) // num_workers
     chunks = [
         (i, min(i + chunk_size, num_edges), hyperedges, inverted_index, smin, smax)
@@ -116,7 +122,6 @@ if __name__ == "__main__":
     with gzip.open(args.input_filepath, "rt", encoding="utf-8") as f:
         hif_dict = json.load(f)
     H = xgi.from_hif_dict(hif_dict)
-    H = xgi.read_hif()
 
     hyperedges = relabel_and_extract_hyperedges(H, args.smin)
     inverted_index = build_inverted_index(hyperedges)
