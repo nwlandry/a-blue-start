@@ -165,3 +165,4 @@ starterpack_hif.json
 .vscode
 
 test*
+data/deidentified_nodes.jsonl.gz
