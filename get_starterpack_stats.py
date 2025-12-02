@@ -8,8 +8,9 @@ from os.path import join
 import numpy as np
 import xgi
 
-base_dir = "/scratch/yyu8dx/Research/bluesky-graph/postprocessed_data/SOMAR"
+# base_dir = "/scratch/yyu8dx/Research/bluesky-graph/postprocessed_data/SOMAR"
 # base_dir = "data"
+base_dir = "/Users/a404/OneDrive - University of Virginia/SOMAR_v2/"
 starterpack_file = "deidentified_starterpack_hif.json.gz"
 
 with gzip.open(join(base_dir, starterpack_file), "rt", encoding="utf-8") as f:
@@ -59,7 +60,7 @@ for e in H.edges:
         creator_date_created = datetime(1, 1, 1, 0, 0, 0)
 
     if date_created > datetime(2020, 1, 1, 0, 0, 0):
-        starterpack_date_created.append(node_attrs["date-created"])
+        starterpack_date_created.append(edge_attrs["date-created"])
 
     if creator_date_created > datetime(2020, 1, 1, 0, 0, 0):
         # filtering out nans
