@@ -3,7 +3,7 @@ import gzip
 import json
 from os.path import join
 
-import networkx as nx
+import igraph as ig
 import polars as pl
 import xgi
 
@@ -31,19 +31,35 @@ for e in H.edges:
 print("hypergraph loaded; time is: ", flush=True)
 print(datetime.now(), flush=True)
 
-# load following graph
-G_foll = nx.DiGraph()
+G = ig.Graph(n=len(nodes))
 with gzip.open(join(base_dir, 'deidentified_follows_edgelist.csv.gz'), 'rt', encoding="utf-8") as f:
-    for row in f.readlines():       
-            spl = row.strip().split(',')
-            i = int(spl[0])
-            j = int(spl[1])
-            days_since_epoch = None
-            try:
-                days_since_epoch = (datetime.fromisoformat(spl[2]) - EPOCH).days
-            except Exception as e:
-                print(e)
-                print(spl)
-            G_foll.add_edge(i, j, created_days_since_epoch=days_since_epoch)
-print("following loaded; time is: ", flush=True)
+    tmp_edges = []
+    tmp_ts = {}
+    for ix, row in enumerate(f.readlines()):
+        spl = row.strip().split(',')
+        i = int(spl[0])
+        j = int(spl[1])
+        days_since_epoch = -1
+        try:
+            days_since_epoch = (datetime.fromisoformat(spl[2]) - EPOCH).days
+        except Exception as e:
+            print(e, flush=True)
+            print(spl, flush=True)
+        tmp_edges.append((i, j))
+        tmp_ts[ix] = days_since_epoch
+
+        if (ix + 1) % 250000000 == 0: # note that this will slow down each iteration. adding edges in roughly 10% batched increments limits RAM usage.
+            G.add_edges(tmp_edges)
+            tmp_edges = []
+            for ix, ts in tmp_ts.items():
+                G.es[ix]['created_days_since_epoch'] = ts
+            tmp_ts = {}
+            print('edges loaded successfully', ix, flush=True)
+            print(datetime.now(), flush=True)
+
+
+G.add_edges(tmp_edges)
+for ix, ts in tmp_ts.items():
+    G.es[ix]['created_days_since_epoch'] = ts
+print("follow graph loaded; time is: ", flush=True)
 print(datetime.now(), flush=True)

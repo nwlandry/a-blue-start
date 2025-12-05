@@ -37,20 +37,24 @@ G = Graph(directed=True)
 print("new GT graph", flush=True)
 created_days_since_epoch = G.new_edge_property('int')
 with gzip.open(join(base_dir, 'deidentified_follows_edgelist.csv.gz'), 'rt', encoding="utf-8") as f:
-    for row in f.readlines():
+    tmp_edges = []
+    for ix, row in enumerate(f.readlines()):
         try:
             spl = row.strip().split(',')
             i = int(spl[0])
             j = int(spl[1])
-            e = G.add_edge(i, j)
-            created_days_since_epoch[e] = -1
             ts = (datetime.fromisoformat(spl[2]) - EPOCH).days
-            created_days_since_epoch[e] = ts
-            if random.randint(0, 1000) == 5:
-                print('test timestamp: ', ts, flush=True)
+            tmp_edges.append((i, j, ts))
         except Exception as e:
             print(e, flush=True)
             print(spl, flush=True)
+        if (ix + 1) % 100000000 == 0: # adjustable to suit your RAM availability; 100 million = ~6 minutes of loading pretty consistently
+            G.add_edge_list(tmp_edges, eprops=[created_days_since_epoch])
+            tmp_edges = []
+            print("processed edges up till", ix, flush=True)
+            print(datetime.now(), flush=True)
+
+G.add_edge_list(tmp_edges, eprops=[created_days_since_epoch])
 G.ep['created_days_since_epoch'] = created_days_since_epoch
 print("built graph")
 print("following loaded; time is: ", flush=True)
