@@ -9,7 +9,7 @@ import numpy as np
 import xgi
 
 base_dir = "/scratch/yyu8dx/Research/bluesky-graph/postprocessed_data/SOMAR"
-# base_dir = "data"
+base_dir = "data"
 starterpack_file = "deidentified_starterpack_hif.json.gz"
 
 with gzip.open(join(base_dir, starterpack_file), "rt", encoding="utf-8") as f:
@@ -59,7 +59,7 @@ for e in H.edges:
         creator_date_created = datetime(1, 1, 1, 0, 0, 0)
 
     if date_created > datetime(2020, 1, 1, 0, 0, 0):
-        starterpack_date_created.append(node_attrs["date-created"])
+        starterpack_date_created.append(edge_attrs["date-created"])
 
     if creator_date_created > datetime(2020, 1, 1, 0, 0, 0):
         # filtering out nans
@@ -92,5 +92,5 @@ data["account-age-at-creation"] = account_age_at_creation
 
 datastring = json.dumps(data, indent=2)
 makedirs("data", exist_ok=True)
-with open("data/starterpack-stats.json", "w") as f:
+with open("data/starterpack_stats.json", "w") as f:
     f.write(datastring)
