@@ -5,6 +5,7 @@ This repository accompanies the preprint ["A Blue Start: A large-scale pairwise 
 ## Repository structure:
 * `data` contains data on the network statistics plotted in Figs. 1-6 in the paper.
 * `figures` contains the Figs. 1-6 in the paper.
+* `starter-code` contains example code for loading the datasets into [igraph](https://python.igraph.org/en/stable/) and [graph-tool](https://graph-tool.skewed.de/).
 
 ## Scripts
 The following scripts are used to generate statistics from the network data:
@@ -28,6 +29,10 @@ python s_line_count.py --input_filepath "deidentified_starterpack_hif.json.gz" -
 
 * `plot_network_stats.ipynb`: This notebook plots Fig. 4 and also prints the basic network statistics in a readable way.
 * `plot_starterpack_stats.ipynb`: This notebook plots Figs. 1-3, 5 and also prints the basic starter pack statistics in a readable way.
+
+## Starter Code
+* `starter-code/graph-tool_load.py` loads the node dataset as a [polars](https://pola.rs/) dataframe, the starter pack dataset in [XGI](https://xgi.readthedocs.io/en/stable/), and the following network in [graph-tool](https://graph-tool.skewed.de/). This code uses about 310 GB of RAM and takes about 2.75 hours to run.
+* `starter-code/igraph_load.py` loads the node dataset as a [polars](https://pola.rs/) dataframe, the starter pack dataset in [XGI](https://xgi.readthedocs.io/en/stable/)    , and the following network in [igraph](https://python.igraph.org/en/stable/). This code uses about 460 GB of RAM and took about 5.5 hours to run.
 
 ## Getting started
 
