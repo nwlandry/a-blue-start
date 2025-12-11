@@ -2,14 +2,14 @@
 
 ## Nodes
 
-* 39,650,447 total users
-* 37,479,031 extant users
-* 38,858,797 from listRepos
-* 36,687,381 active users
-* 2,171,416 inactive users, of these:
-    * 1,808,660 were taken down through moderation
-    * 362,756 were deactivated
-* 791,650 users with no status
+* 39,615,181 total users
+* 37,446,932 extant users
+* 38,826,972 from listRepos
+* 36,658,723 active users
+* 2,168,249 inactive users, of these:
+    * 1,805,687 were taken down through moderation
+    * 362,562 were deactivated
+* 788,209 users with no status
 
 
 ## Following network
@@ -23,13 +23,13 @@
     * minimum is 1
     * maximum is 28,062,787
     * mean is 105.8
-    * mean over all following nodes is 66.295
+    * mean over all following nodes is 64.47
     * 13,608,819 following accounts which have no followers.
 * Out-degree
     * minimum is 1
     * maximum is 844,408
     * mean is 70.38
-    * mean over all following nodes is 66.295
+    * mean over all following nodes is 64.47
     * 2,113,664 following accounts which don't follow anyone.
 
 
