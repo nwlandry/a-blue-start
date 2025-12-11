@@ -42,7 +42,9 @@
     * Largest connected component has 1,997,488 nodes, or 99.7% of all nodes.
     * 1997488, 353, 171, 135, 113 nodes in the top-5 largest components
     * 383 isolated starterpacks
-
+* Times
+    * There are 5 starter packs with invalid creation dates or 0.00137% of all starterpacks
+    * There are 8 starter packs with negative account age at creation or 0.0022% of all starterpacks
 * Number of starterpacks created
     * minimum is 1
     * maximum is 252
