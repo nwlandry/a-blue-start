@@ -18,11 +18,25 @@ H = xgi.from_hif_dict(hif_dict)
 
 print("Loaded hypergraph!")
 
-cc = [len(c) for c in xgi.connected_components(H)]
-component_sizes, component_numbers = np.unique(cc, return_counts=True)
+connected_components = sorted([c for c in xgi.connected_components(H)], key=len)
+ccs = [len(c) for c in connected_components]
+component_sizes, component_numbers = np.unique(ccs, return_counts=True)
+
+num_isolated_starterpacks = 0
+for c in connected_components[:-1]:
+    edges_in_component = set()
+    for n in c:
+        edges_in_component.update(H.nodes.memberships(n))
+    if len(edges_in_component) == 1:
+        num_isolated_starterpacks += 1
+
+print(
+    f"The top-5 component sizes are: {", ".join(str(i) for i in reversed(component_sizes[-5:]))}"
+)
+print(f"The number of isolated starterpacks is: {num_isolated_starterpacks}")
 
 print("Calculated component sizes!")
-
+print(stop)
 edge_sizes = H.edges.size.aslist()
 degrees = H.nodes.degree.aslist()
 

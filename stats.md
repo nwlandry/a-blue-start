@@ -37,8 +37,12 @@
 
 * There are 2,003,536 nodes in the starterpack network
 * There are 365,842 edges in the starterpack network
-* There are 409 connected components in the starterpack network.
-* The largest connected component has 1,997,488 nodes, or 99.7% of all nodes.
+* Components
+    * 409 connected components
+    * Largest connected component has 1,997,488 nodes, or 99.7% of all nodes.
+    * 1997488, 353, 171, 135, 113 nodes in the top-5 largest components
+    * 383 isolated starterpacks
+
 * Number of starterpacks created
     * minimum is 1
     * maximum is 252
