@@ -2,13 +2,14 @@
 
 ## Nodes
 
-* 39,615,181 total users
-* 37,446,932 extant users
-* 36,658,723 active users
-* 2,168,249 inactive users, of these:
-    * 1,805,687 were taken down through moderation
-    * 362,562 were deactivated
-* 788,209 users with no status
+* 39,650,447 total users
+* 37,479,031 extant users
+* 38,826,972 from listRepos
+* 36,687,381 active users
+* 2,171,416 inactive users, of these:
+    * 1,808,660 were taken down through moderation
+    * 362,756 were deactivated
+* 791,650 users with no status
 
 
 ## Following network
@@ -16,21 +17,21 @@
 * There are 36,447,725 nodes in the following network
 * There are 2,416,311,437 links in the following network
 * Largest component
-    * The largest strongly connected component contains 20,495,220 users, or 54.7% of extant nodes and 56.2% of following nodes.
-    * The largest weakly connected component contains 36,433,172 users, or 97.3% of extant nodes and 99.96% of following nodes.
+    * The largest strongly connected component contains 20,495,220 users, or 56.2% of following nodes.
+    * The largest weakly connected component contains 36,433,172 users, or 99.96% of following nodes.
 * In-degree
     * minimum is 1
     * maximum is 28,062,787
     * mean is 105.8
     * mean over all extant nodes is 64.53
-    * 14,608,026 extant accounts which have no followers.
+    * 14,640,125 extant accounts which have no followers.
     * 13,608,819 following accounts which have no followers.
 * Out-degree
     * minimum is 1
     * maximum is 844,408
     * mean is 70.38
     * mean over all extant nodes is 64.53
-    * 3,112,871 extant accounts which don't follow anyone.
+    * 3,144,970 extant accounts which don't follow anyone.
     * 2,113,664 following accounts which don't follow anyone.
 
 
@@ -51,7 +52,7 @@
     * min is 0
     * max is 4,069
     * mean is 34.724
-    * median is 24.0
+    * median is 24
     * mode is 50
 * Degree
     * min is 1
