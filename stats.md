@@ -4,7 +4,7 @@
 
 * 39,650,447 total users
 * 37,479,031 extant users
-* 38,826,972 from listRepos
+* 38,858,797 from listRepos
 * 36,687,381 active users
 * 2,171,416 inactive users, of these:
     * 1,808,660 were taken down through moderation
@@ -23,15 +23,13 @@
     * minimum is 1
     * maximum is 28,062,787
     * mean is 105.8
-    * mean over all extant nodes is 64.53
-    * 14,640,125 extant accounts which have no followers.
+    * mean over all following nodes is 66.295
     * 13,608,819 following accounts which have no followers.
 * Out-degree
     * minimum is 1
     * maximum is 844,408
     * mean is 70.38
-    * mean over all extant nodes is 64.53
-    * 3,144,970 extant accounts which don't follow anyone.
+    * mean over all following nodes is 66.295
     * 2,113,664 following accounts which don't follow anyone.
 
 
