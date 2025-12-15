@@ -11,36 +11,6 @@ import numpy as np
 import xgi
 
 
-def entropy(labels, base=None, norm=False):
-    """Computes entropy of label distribution."""
-
-    n_labels = len(labels)
-
-    if n_labels <= 1:
-        return 0
-
-    value, counts = np.unique(labels, return_counts=True)
-    probs = counts / n_labels
-    n_classes = np.count_nonzero(probs)
-
-    if n_classes <= 1:
-        return 0
-
-    ent = 0.0
-
-    # Compute entropy
-    base = 2 if base is None else base
-    for p in probs:
-        try:
-            ent -= p * log(p, base)
-        except Exception as e:
-            print(p)
-    if norm:
-        return ent / (log(n_labels, base))
-    else:
-        return ent
-
-
 base_dir = "/scratch/yyu8dx/Research/bluesky-graph/postprocessed_data/SOMAR"
 # base_dir = "data"
 starterpack_file = "deidentified_starterpack_hif.json.gz"
@@ -97,9 +67,5 @@ print(
     f"There are {len({i for i in node_labels.values()})} communities in the starter pack network."
 )
 
-edge_entropy = {}
-for e in H.edges:
-    edge_entropy[e] = entropy([node_labels[n] for n in H.edges.members(e)], norm=True)
-
-with open("data/edge_entropy.json", "w") as f:
-    f.write(json.dumps(edge_entropy))
+with open("data/node_labels.json", "w") as f:
+    f.write(json.dumps(node_labels))
