@@ -36,7 +36,7 @@ print(
 print(f"The number of isolated starterpacks is: {num_isolated_starterpacks}")
 
 print("Calculated component sizes!")
-print(stop)
+
 edge_sizes = H.edges.size.aslist()
 degrees = H.nodes.degree.aslist()
 

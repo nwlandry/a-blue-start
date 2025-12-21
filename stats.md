@@ -35,24 +35,24 @@
 
 ## Starter pack
 
-* There are 2,003,536 nodes in the starterpack network
-* There are 365,842 edges in the starterpack network
+* There are 2,003,536 nodes in the starter pack network
+* There are 365,842 edges in the starter pack network
 * Components
     * 409 connected components
     * Largest connected component has 1,997,488 nodes, or 99.7% of all nodes.
     * 1997488, 353, 171, 135, 113 nodes in the top-5 largest components
-    * 383 isolated starterpacks
+    * 383 isolated starter packs
 * Times
-    * There are 5 starter packs with invalid creation dates or 0.00137% of all starterpacks
-    * There are 8 starter packs with negative account age at creation or 0.0022% of all starterpacks
-* Number of starterpacks created
+    * There are 5 starter packs with invalid creation dates or 0.00137% of all starter packs
+    * There are 8 starter packs with negative account age at creation or 0.0022% of all starter packs
+* Number of starter packs created
     * minimum is 1
     * maximum is 252
     * mean is 1.162
     * median is 1
     * mode is 1
-    * 84.3% of users did not make a starter pack
-* Starterpack size
+    * 84.3% of users in the starter pack network did not make a starter pack
+* Starter pack size
     * min is 0
     * max is 4,069
     * mean is 34.724
@@ -73,3 +73,10 @@
     * 0.0207 for s=4
     * 0.0139 for s=5
 * k-core: There are 772 nodes in the k-core with k >= 1000.
+* Communities
+    * There are 503 communities
+    * The mean edge entropy is 0.16, compared to 0.576 for the configuration model
+    * There is a single edge (of size 8) with entropy 1.
+    * Edges of sizes up to 296 have entropy 0.
+    * 17.126% of edges in the giant component have an entropy of 0.
+    * Top-5 community sizes are 434,207; 333,148; 156,110; 126,567; and 98,434
