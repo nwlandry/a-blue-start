@@ -10,7 +10,6 @@ import leidenalg
 import numpy as np
 import xgi
 
-
 base_dir = "/scratch/yyu8dx/Research/bluesky-graph/postprocessed_data/SOMAR"
 # base_dir = "data"
 starterpack_file = "deidentified_starterpack_hif.json.gz"
